@@ -1,31 +1,60 @@
+// App.vue
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
-  <p>안녕하세요</p>
+  <div class="container-sm mt-5">
+    <h4>Todo</h4>
+    <div class="input-group mb-3">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="할일을 입력해주세요" 
+        aria-describedby="button-addon2"
+        v-model="inputData"
+      >
+      <button 
+      class="btn btn-outline-danger" 
+      type="button" id="button-addon2"
+      @click="addTodo"
+      >
+        추가
+      </button>
+    </div>
+  </div>
+  <div class="container-sm mt-5">
+    <ul>
+      <li v-for="(todos,index) in todos " :key="index">{{ todos }}<hr></li>
+    </ul>
+  </div>
 </template>
 
+<script>
+
+export default {
+  name: 'App',
+  components: {
+  },
+  data() { 
+    return {
+      inputData : '',
+      todos:[],
+    }
+  },
+  methods: {
+    addTodo(){
+      if(this.inputData.trim() === '') {
+        alert('할일을 입력해주세요!');
+        return;
+      }
+      this.todos.push(this.inputData);
+      this.inputData = '';
+    },
+    deleteTodo(){
+      this.todos.pop();
+    }
+  },
+  
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
