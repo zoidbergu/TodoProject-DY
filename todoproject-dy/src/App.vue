@@ -9,6 +9,7 @@
         placeholder="할일을 입력해주세요" 
         aria-describedby="button-addon2"
         v-model="inputData"
+        @keyup.enter="addTodo"
       >
       <button 
       class="btn btn-outline-danger" 
@@ -19,9 +20,15 @@
       </button>
     </div>
   </div>
+  <!--
+    드래그로 순서바뀌게끔해줘야할듯
+  -->
   <div class="container-sm mt-5">
-    <ul>
-      <li v-for="(todos,index) in todos " :key="index">{{ todos }}<hr></li>
+    <ul class="list-group">
+      <li class="todoGroup list-group-item" v-for="(todos,index) in todos " :key="index">
+        {{index+1}}. {{ todos }}
+        <button class="btn btn-outline-danger btn-sm float-end" type="button" @click="deleteTodo">x</button>
+      </li>
     </ul>
   </div>
 </template>
@@ -56,5 +63,7 @@ export default {
 </script>
 
 <style>
-
+  .todoGroup{
+    font-size:18px;
+  }
 </style>
