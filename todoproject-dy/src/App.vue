@@ -1,33 +1,57 @@
 // App.vue
 <template>
-  <Title name="TO-DO" />
-  <!-- @<customEvent 이름>="실행되는 method이름" -->
-  <ToDoInput @add-to-do="addToDo" />
-  <ToDoList :todos="todos" />
+  <div class="container-sm mt-5">
+    <h4>Todo</h4>
+    <div class="input-group mb-3">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="할일을 입력해주세요" 
+        aria-describedby="button-addon2"
+        v-model="inputData"
+      >
+      <button 
+      class="btn btn-outline-danger" 
+      type="button" id="button-addon2"
+      @click="addTodo"
+      >
+        추가
+      </button>
+    </div>
+  </div>
+  <div class="container-sm mt-5">
+    <ul>
+      <li v-for="(todos,index) in todos " :key="index">{{ todos }}<hr></li>
+    </ul>
+  </div>
 </template>
 
 <script>
-import Title from './components/Title.vue'
-import ToDoInput from './components/ToDoInput.vue'
-import ToDoList from './components/ToDoList.vue'
 
 export default {
   name: 'App',
   components: {
-    Title,
-    ToDoInput,
-    ToDoList
   },
   data() { 
     return {
-      todos: ['과제하기','숙제하기','청소하기']
+      inputData : '',
+      todos:[],
     }
   },
   methods: {
-    addToDo(content) {
-      this.todos.push(content) //클릭하면 여기로 전달됨
+    addTodo(){
+      if(this.inputData.trim() === '') {
+        alert('할일을 입력해주세요!');
+        return;
+      }
+      this.todos.push(this.inputData);
+      this.inputData = '';
+    },
+    deleteTodo(){
+      this.todos.pop();
     }
-  }
+  },
+  
 }
 </script>
 
