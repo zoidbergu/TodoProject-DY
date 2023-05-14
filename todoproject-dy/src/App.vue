@@ -1,7 +1,6 @@
-// App.vue
 <template>
   <div class="container-sm mt-5">
-    <h4>Todo</h4>
+    <h2>Todo</h2>
     <div class="input-group mb-3">
       <input 
         type="text" 
@@ -27,14 +26,14 @@
     <ul class="list-group">
       <li class="todoGroup list-group-item" v-for="(todos,index) in todos " :key="index">
         {{index+1}}. {{ todos }}
-        <button class="btn btn-outline-danger btn-sm float-end" type="button" @click="deleteTodo">x</button>
+        <button class="btn btn-outline-danger btn-sm float-end" type="button" @click="deleteTodo(index)">X</button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
   name: 'App',
   components: {
@@ -47,15 +46,25 @@ export default {
   },
   methods: {
     addTodo(){
-      if(this.inputData.trim() === '') {
+      if(this.inputData === '') {
         alert('할일을 입력해주세요!');
         return;
       }
       this.todos.push(this.inputData);
+      //서버로데이터전송
+      axios.post('http://localhost:8080/todos', {
+        todo: this.inputData
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.error(error);
+      });
       this.inputData = '';
     },
-    deleteTodo(){
-      this.todos.pop();
+    deleteTodo(index){
+      this.todos.splice(index, 1);
     }
   },
   
