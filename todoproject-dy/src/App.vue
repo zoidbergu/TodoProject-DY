@@ -1,11 +1,36 @@
+// App.vue
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
-  <p>안녕하세요</p>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <Title name="TO-DO" />
+  <!-- @<customEvent 이름>="실행되는 method이름" -->
+  <to-do-input @add-to-do="addToDo" />
+  <to-do-list :todos="todos" />
 </template>
+
+<script>
+import Title from './views/Title.vue'
+import ToDoInput from './views/ToDoInput.vue'
+import ToDoList from './views/ToDoList.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Title,
+    ToDoInput,
+    ToDoList
+  },
+  data() { 
+    return {
+      todos: ['과제하기','숙제하기','청소하기']
+    }
+  },
+  methods: {
+    addToDo(content) {
+      this.todos.push(content) //클릭하면 여기로 전달됨
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -14,18 +39,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  margin-top: 60px;
 }
 </style>
